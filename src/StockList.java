@@ -77,6 +77,14 @@ public class StockList {
     }
 
 
+    public double get_total()
+    {
+        double total_investment_price = 0.0;
+        for (Stock value : stock_list) {
+            total_investment_price += value.getPrice();
+        }
+        return total_investment_price;
+    }
     public void sum_up_list() {
         double total_investment_price = 0.0;
         String most_invested_cat = "NULL";

@@ -27,19 +27,39 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What PieChart do you want to see?");
+        System.out.println("a) Companies to total investment ratio.");
+        System.out.println("b) Categories to total investment ratio.");
+        char choice = scanner.next().charAt(0);
+        if(choice == 'a' || choice == 'A') {
+            for (int i = 0; i < stock_list.getStock_list().size(); i++) {
+                pieData.add(new PieChart.Data(stock_list.getStock_list().get(i).getCompany_name(), (stock_list.getStock_list().get(i).getPrice() / stock_list.get_total() )));
+            }
 
-        for(int i = 0; i < stock_list.getStock_list().size(); i++)
-        {
-            pieData.add(new PieChart.Data(stock_list.getStock_list().get(i).getCompany_name(), stock_list.getStock_list().get(i).getPrice()));
+            PieChart pChart = new PieChart(pieData);
+            pChart.setData(pieData);
+            Group root = new Group(pChart);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Portfolio sorted by company");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            return;
         }
+        if(choice == 'b' || choice == 'B') {
+            for (int i = 0; i < stock_list.getStock_list().size(); i++) {
+                pieData.add(new PieChart.Data(stock_list.getStock_list().get(i).getCategory(), stock_list.getStock_list().get(i).getPrice() / stock_list.get_total()));
+            }
 
-        PieChart pChart = new PieChart(pieData);
-        pChart.setData(pieData);
-        Group root = new Group(pChart);
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Portfolio sorted by company");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+            PieChart pChart = new PieChart(pieData);
+            pChart.setData(pieData);
+            Group root = new Group(pChart);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Portfolio sorted by category");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            return;
+        }
     }
 }
 
