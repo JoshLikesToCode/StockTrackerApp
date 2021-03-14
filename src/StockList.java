@@ -1,3 +1,4 @@
+import java.io.*;
 import java.sql.SQLOutput;
 import java.text.NumberFormat;
 import java.util.*;
@@ -85,6 +86,37 @@ public class StockList {
         }
         return total_investment_price;
     }
+
+    public void save() throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter(new FileOutputStream("stocks.txt"));
+        pw.println(stock_list.size());
+
+        for (Stock stock : stock_list) {
+            pw.println(stock.getCompany_name());
+            pw.println(stock.getTicker());
+            pw.println(stock.getCategory());
+            pw.println(stock.getPrice());
+        }
+        pw.close();
+    }
+
+    public void load() throws FileNotFoundException {
+        List<Stock> stocks = stock_list;
+        try(Scanner scanner = new Scanner(new File("stocks.txt")))
+        {
+            int count = scanner.nextInt();
+            for(int i = 0; i < count; i++)
+            {
+                String cn = scanner.next();
+                String ticker = scanner.next();
+                String category = scanner.next();
+                Double invested = scanner.nextDouble();
+                stock_list.add(new Stock(cn, ticker, category, invested));
+            }
+        }
+    }
+
+
     public void sum_up_list() {
         double total_investment_price = 0.0;
         String most_invested_cat = "NULL";

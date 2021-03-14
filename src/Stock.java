@@ -16,7 +16,7 @@ public class Stock {
         this.ticker = scanner.nextLine();
         System.out.print("Please enter the stock's category: ");
         this.category = scanner.nextLine();
-        System.out.print("Please ennter current $ invested in this stock: ");
+        System.out.print("Please enter current $ invested in this stock: ");
         this.price = scanner.nextDouble();
     }
     public Stock(String cn, String tic, String cat, Double p)

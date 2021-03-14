@@ -6,22 +6,42 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main extends Application {
     private static final StockList stock_list = new StockList();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("How many companies would you like to enter?");
-        int loop = scanner.nextInt();
-        scanner.nextLine();
-        for(int i = 0; i < loop; i++)
-        {
-            stock_list.add();
+        System.out.println("What would you like to do?");
+        System.out.println("a) Make new stock list.");
+        System.out.println("b) Load up last saved stock list.");
+
+        char choice = scanner.next().charAt(0);
+        if (choice == 'a' || choice == 'A') {
+            System.out.println("How many companies would you like to enter?");
+            int loop = scanner.nextInt();
+            scanner.nextLine();
+            for (int i = 0; i < loop; i++) {
+                stock_list.add();
+            }
+            System.out.println("Would you like to save this list? Enter Y/N");
+            char save = scanner.next().charAt(0);
+            if(save == 'Y' || save == 'y')
+            {
+                stock_list.save();
+            }
+
+            Application.launch(args);
         }
 
-        Application.launch(args);
+        if(choice == 'b' || choice == 'B')
+        {
+            stock_list.load();
+            //stock_list.sum_up_list();
+            Application.launch(args);
+        }
     }
 
     @Override
